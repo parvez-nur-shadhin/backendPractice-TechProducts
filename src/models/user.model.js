@@ -17,13 +17,13 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    id: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-    },
+    // id: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    //   trim: true,
+    //   lowercase: true,
+    // },
     email: {
       type: String,
       required: true,
@@ -40,7 +40,6 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
       lowercase: true,
@@ -48,7 +47,6 @@ const userSchema = new Schema(
     },
     gender: {
       type: String,
-      required: true,
       unique: true,
       trim: true,
       lowercase: true,
@@ -79,10 +77,9 @@ const userSchema = new Schema(
 );
 
 // hashing my password
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = bcrypt.hash(this.password, 10);
-  next();
 });
 
 // Comparing if the password is correct or not.
